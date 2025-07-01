@@ -8,6 +8,7 @@ A clean, functional calculator
 - **Keyboard-friendly**: Type numbers and operators directly
 - **Error handling**: Clear display for invalid inputs
 - **Responsive design**: Works on desktop and mobile
+- **Dark Mode**: Changes background color with an transition
 
 ## Built With
 - HTML5
@@ -16,6 +17,6 @@ A clean, functional calculator
 
 ## Future Ideas 💡
 - [ ] Implement a calculation history
-- [ ] Dark mode toggle
+- [ ✅ ] Dark mode toggle
 
 -SumHen
