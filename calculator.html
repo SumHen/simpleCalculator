@@ -1,159 +1,234 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Calculator</title>
-        <style>
-            body {
-                margin-top: 50px;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                text-align: center;
-                background-color: #f5f5f5;
-            }
-            .calculator {
-                display: inline-block;
-                border: 3px solid black;
-                padding: 25px;
-                border-radius: 10px;
-                background-color: rgb(190, 190, 190);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-            #display {
-                font-size: 50px;
-                border: 1px solid white;
-                display: inline-block;
-                text-align: right;
-                margin: 20px;
-                padding: 10px;
-                min-width: 250px;
-                background-color: white;
-                border-radius: 5px;
-            }
-            button {
-                padding: 15px 20px;
-                margin: 5px;
-                width: 50px;
-                font-size: 1em;
-                cursor: pointer;
-                border-radius: 5px;
-                border: 1px solid #888;
-                background-color: #f0f0f0;
-                transition: background-color 0.2s;
-            }
-            button:hover {
-                background-color: #ddd;
-            }
-            .operator {
-                background-color: #ff9500;
-                color: white;
-            }
-            .operator:hover {
-                background-color: #e68a00;
-            }
-            .row {
-                margin-bottom: 5px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="calculator">
-            <h1>Calculator</h1>
-            <div id="display">0</div>
+<head>
+    <title>Calculator</title>
+    <style>
+        body {
+            margin-top: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        
+        .calculator {
+            display: inline-block;
+            border: 3px solid black;
+            padding: 25px;
+            border-radius: 10px;
+            background-color: rgb(190, 190, 190);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        body.dark-mode .calculator {
+            background-color: #1e1e1e;
+            border-color: #444;
+        }
+        
+        #display {
+            font-size: 50px;
+            border: 1px solid white;
+            display: inline-block;
+            text-align: right;
+            margin: 20px;
+            padding: 10px;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        
+        body.dark-mode #display {
+            background-color: #2d2d2d;
+            color: #fff;
+            border-color: #555;
+        }
+        
+        button {
+            padding: 15px 20px;
+            margin: 5px;
+            width: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #888;
+            background-color: #f0f0f0;
+            transition: background-color 0.2s;
+        }
+        
+        body.dark-mode button {
+            background-color: #333;
+            color: #fff;
+            border-color: #555;
+        }
+        
+        button:hover {
+            background-color: #ddd;
+        }
+        
+        body.dark-mode button:hover {
+            background-color: #444;
+        }
+        
+        .operator {
+            background-color: #ff9500;
+            color: white;
+        }
+        
+        body.dark-mode .operator {
+            background-color: #ff9f0c;
+        }
+        
+        .operator:hover {
+            background-color: #e68a00;
+        }
+        
+        body.dark-mode .operator:hover {
+            background-color: #ffb340;
+        }
+        
+        .row {
+            margin-bottom: 5px;
+        }
+        
+        .dark-mode-toggle {
+            width: 60px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculator</h1>
+        <div id="display">0</div>
 
-            <div class="row">
-                <button onclick="ClearDisplay()">C</button>
-                <button onclick="Display('(')">(</button>
-                <button onclick="Display(')')">)</button>
-                <button onclick="Display('/')" class="operator">/</button>
-            </div>
-
-            <div class="row">
-                <button onclick="Display('7')">7</button>
-                <button onclick="Display('8')">8</button>
-                <button onclick="Display('9')">9</button>
-                <button onclick="Display('*')" class="operator">×</button>
-            </div>
-
-            <div class="row">
-                <button onclick="Display('4')">4</button>
-                <button onclick="Display('5')">5</button>
-                <button onclick="Display('6')">6</button>
-                <button onclick="Display('+')" class="operator">+</button>
-            </div>
-
-            <div class="row">
-                <button onclick="Display('1')">1</button>
-                <button onclick="Display('2')">2</button>
-                <button onclick="Display('3')">3</button>
-                <button onclick="Display('-')" class="operator">-</button>
-            </div>
-
-            <div class="row">
-                <button onclick="Display('0')" style="width: 125px;">0</button>
-                <button onclick="Display('.')">.</button>
-                <button onclick="calculate()" class="operator">=</button>
-            </div>
+        <div class="row">
+            <button onclick="ClearDisplay()">C</button>
+            <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌓</button>
+            <button onclick="Display('(')">(</button>
+            <button onclick="Display(')')">)</button>
+            <button onclick="Display('/')" class="operator">/</button>
         </div>
 
-        <script>
-            let currentNumber = '0';
-            const display = document.getElementById("display");
+        <div class="row">
+            <button onclick="Display('7')">7</button>
+            <button onclick="Display('8')">8</button>
+            <button onclick="Display('9')">9</button>
+            <button onclick="Display('*')" class="operator">×</button>
+        </div>
 
-            function updateDisplay() {
-                display.textContent = currentNumber;
+        <div class="row">
+            <button onclick="Display('4')">4</button>
+            <button onclick="Display('5')">5</button>
+            <button onclick="Display('6')">6</button>
+            <button onclick="Display('+')" class="operator">+</button>
+        </div>
+
+        <div class="row">
+            <button onclick="Display('1')">1</button>
+            <button onclick="Display('2')">2</button>
+            <button onclick="Display('3')">3</button>
+            <button onclick="Display('-')" class="operator">-</button>
+        </div>
+
+        <div class="row">
+            <button onclick="Display('0')" style="width: 125px;">0</button>
+            <button onclick="Display('.')">.</button>
+            <button onclick="calculate()" class="operator">=</button>
+        </div>
+    </div>
+
+    <script>
+        let currentNumber = '0';
+        const display = document.getElementById("display");
+
+        // Initialize dark mode from localStorage
+        function initializeDarkMode() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '☀️';
             }
+        }
 
-            function Display(value) {
-                const lastChar = currentNumber.slice(-1);
-                const operators = ['+', '-', '*', '/'];
-                
-                if (operators.includes(value) && operators.includes(lastChar)) {
-                    currentNumber = currentNumber.slice(0, -1) + value;
-                    updateDisplay();
+        // Toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            const darkModeBtn = document.querySelector('.dark-mode-toggle');
+            
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            
+            // Update button icon
+            darkModeBtn.textContent = isDark ? '☀️' : '🌙';
+            
+            // Save preference
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function updateDisplay() {
+            display.textContent = currentNumber;
+        }
+
+        function Display(value) {
+            if (value === '=') {
+                calculate();
+                return;
+            }
+            
+            // Prevent multiple operators in a row
+            const lastChar = currentNumber.slice(-1);
+            const operators = ['+', '-', '*', '/'];
+            
+            if (operators.includes(value) && operators.includes(lastChar)) {
+                // Replace the last operator if user presses a new one
+                currentNumber = currentNumber.slice(0, -1) + value;
+                updateDisplay();
+                return;
+            }
+            
+            // Prevent multiple decimals in a number
+            if (value === '.') {
+                const parts = currentNumber.split(/[\+\-\*\/]/);
+                if (parts[parts.length-1].includes('.')) {
                     return;
                 }
-                
-                if (value === '.') {
-                    const parts = currentNumber.split(/[\+\-\*\/]/);
-                    if (parts[parts.length-1].includes('.')) {
-                        return;
-                    }
-                }
-                
-                if (currentNumber === '0' && value !== '.') {
-                    currentNumber = value;
-                } else {
-                    currentNumber += value;
-                }
-                updateDisplay();
             }
-
-            function ClearDisplay() {
-                currentNumber = '0';
-                updateDisplay();
+            
+            if (currentNumber === '0' && value !== '.') {
+                currentNumber = value;
+            } else {
+                currentNumber += value;
             }
+            updateDisplay();
+        }
 
-            function calculate() {
-                try {
-                    const expression = currentNumber.replace(/×/g, '*');
-                    currentNumber = eval(expression).toString();
-                    updateDisplay();
-                } catch (error) {
-                    currentNumber = 'Error';
-                    updateDisplay();
-                    setTimeout(ClearDisplay, 1000);
-                }
-            }      
+        function ClearDisplay() {
+            currentNumber = '0';
+            updateDisplay();
+        }
 
-            document.addEventListener('keydown', (e) => {
-                if (/[0-9\.\+\-\*\/\(\)]/.test(e.key)) Display(e.key);
-                if (e.key === 'Enter') calculate();
-                if (e.key === 'Escape') ClearDisplay();
-            });
-
-            function backspace() {
-                currentNumber = currentNumber.length > 1 ? currentNumber.slice(0, -1) : '0';
+        function calculate() {
+            try {
+                // Replace × with * for calculation
+                const expression = currentNumber.replace(/×/g, '*');
+                currentNumber = eval(expression).toString();
                 updateDisplay();
+            } catch (error) {
+                currentNumber = 'Error';
+                updateDisplay();
+                setTimeout(ClearDisplay, 1000);
             }
-        </script>
-    </body>
+        }
+
+        // Initialize dark mode when page loads
+        window.addEventListener('DOMContentLoaded', initializeDarkMode);
+    </script>
+</body>
 </html>
