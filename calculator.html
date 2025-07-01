@@ -103,18 +103,15 @@
             }
 
             function Display(value) {
-                // Prevent multiple operators in a row
                 const lastChar = currentNumber.slice(-1);
                 const operators = ['+', '-', '*', '/'];
                 
                 if (operators.includes(value) && operators.includes(lastChar)) {
-                    // Replace the last operator if user presses a new one
                     currentNumber = currentNumber.slice(0, -1) + value;
                     updateDisplay();
                     return;
                 }
                 
-                // Prevent multiple decimals in a number
                 if (value === '.') {
                     const parts = currentNumber.split(/[\+\-\*\/]/);
                     if (parts[parts.length-1].includes('.')) {
@@ -137,7 +134,6 @@
 
             function calculate() {
                 try {
-                    // Replace × with * for calculation
                     const expression = currentNumber.replace(/×/g, '*');
                     currentNumber = eval(expression).toString();
                     updateDisplay();
